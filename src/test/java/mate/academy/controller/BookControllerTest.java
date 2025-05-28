@@ -12,7 +12,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mate.academy.dao.book.BookDto;
 import mate.academy.exception.EntityNotFoundException;
-import mate.academy.repository.BookRepository;
 import mate.academy.util.TestUtil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -39,10 +38,6 @@ public class BookControllerTest {
     private static final Long validId = 1L;
     @Autowired
     private ObjectMapper objectMapper;
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-    @Autowired
-    private BookRepository bookRepository;
 
     @BeforeAll
     static void beforeAll(@Autowired WebApplicationContext context) {

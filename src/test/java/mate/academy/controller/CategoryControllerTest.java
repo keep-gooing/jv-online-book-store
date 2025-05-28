@@ -36,8 +36,6 @@ public class CategoryControllerTest {
     private static final Long validId = 1L;
     @Autowired
     private ObjectMapper objectMapper;
-    @Autowired
-    private WebApplicationContext context;
 
     @BeforeAll
     static void beforeAll(@Autowired WebApplicationContext context) {
