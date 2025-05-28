@@ -35,6 +35,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemMapper orderItemMapper;
     private final ShoppingCartRepository shoppingCartRepository;
 
+    @Override
     public OrderResponseDto createOrder(Long userId, OrderRequestDto orderRequestDto) {
         ShoppingCart cart = shoppingCartRepository.findByUserId(userId).orElseThrow(
                 () -> new EntityNotFoundException("Shopping cart with user id "
