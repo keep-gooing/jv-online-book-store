@@ -3,11 +3,11 @@ package mate.academy.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.dao.book.BookDto;
 import mate.academy.dao.book.CreateBookRequestDto;
 import mate.academy.service.BookService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,7 +40,7 @@ public class BookController {
     @Operation(summary = "Get all books",
             description = "Get paginated and sorted list of all available books")
     @GetMapping
-    public List<BookDto> getAll(Pageable pageable) {
+    public Page<BookDto> getAll(Pageable pageable) {
         return bookService.findAll(pageable);
     }
 

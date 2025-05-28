@@ -48,11 +48,11 @@ public class CategoryServiceTest {
         when(categoryMapper.toDto(secondCategory)).thenReturn(secondCategoryDto);
 
         // WHEN
-        List<CategoryDto> actualPage = categoryService.findAll(pageable);
+        Page<CategoryDto> actualPage = categoryService.findAll(pageable);
 
         // THEN
         Assertions.assertEquals(List.of(firstCategoryDto,
-                secondCategoryDto), actualPage);
+                secondCategoryDto), actualPage.getContent());
         verify(categoryRepository).findAll(pageable);
         verify(categoryMapper).toDto(firstCategory);
         verify(categoryMapper).toDto(secondCategory);

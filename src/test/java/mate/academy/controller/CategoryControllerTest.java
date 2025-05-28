@@ -1,5 +1,6 @@
 package mate.academy.controller;
 
+import static mate.academy.util.TestUtil.createCategoryResponseDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,10 +11,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 import static org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mate.academy.dao.category.CategoryDto;
 import mate.academy.exception.EntityNotFoundException;
-import mate.academy.util.TestUtil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -61,7 +62,7 @@ public class CategoryControllerTest {
                 result.getResponse().getContentAsString(),
                 CategoryDto.class);
         assertNotNull(actual);
-        assertTrue(reflectionEquals(TestUtil.createCategoryResponseDto(), actual, "id"));
+        assertTrue(reflectionEquals(createCategoryResponseDto(), actual, "id"));
     }
 
     @Test
@@ -94,9 +95,11 @@ public class CategoryControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         //THEN
-        CategoryDto[] actual = objectMapper.readValue(
-                result.getResponse().getContentAsString(),
-                CategoryDto[].class);
+        String json = result.getResponse().getContentAsString();
+        JsonNode rootNode = objectMapper.readTree(json);
+        JsonNode contentNode = rootNode.get("content");
+
+        CategoryDto[] actual = objectMapper.readValue(contentNode.toString(), CategoryDto[].class);
         assertNotNull(actual);
         assertEquals(actual.length, 1);
     }

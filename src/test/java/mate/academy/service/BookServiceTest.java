@@ -48,9 +48,9 @@ public class BookServiceTest {
         when(bookMapper.toDto(firstBook)).thenReturn(firstBookDto);
         when(bookMapper.toDto(secondBook)).thenReturn(secondBookDto);
         when(bookRepository.findAll(pageable)).thenReturn(bookPage);
-        List<BookDto> actual = bookService.findAll(pageable);
+        Page<BookDto> actual = bookService.findAll(pageable);
         //THEN
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual.getContent());
         verify(bookRepository, Mockito.times(1)).findAll(pageable);
         verify(bookMapper, Mockito.times(1)).toDto(firstBook);
         verify(bookMapper, Mockito.times(1)).toDto(secondBook);

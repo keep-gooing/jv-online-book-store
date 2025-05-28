@@ -1,5 +1,7 @@
 package mate.academy.controller;
 
+import static mate.academy.util.TestUtil.createBookResponseDto;
+import static mate.academy.util.TestUtil.getSecondBookIsbn;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,10 +11,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mate.academy.dao.book.BookDto;
 import mate.academy.exception.EntityNotFoundException;
-import mate.academy.util.TestUtil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,8 +53,8 @@ public class BookControllerTest {
     @DisplayName("Get book by id")
     void getBook_validId_Success() throws Exception {
         //GIVEN
-        BookDto expected = TestUtil.createBookResponseDto();
-        expected.setIsbn(TestUtil.getSecondBookIsbn());
+        BookDto expected = createBookResponseDto();
+        expected.setIsbn(getSecondBookIsbn());
         //WHEN
         MvcResult result = mockMvc.perform(
                         get("/books/{id}", validId)
@@ -89,20 +91,21 @@ public class BookControllerTest {
     @WithMockUser(username = "User", roles = "USER")
     @DisplayName("Get all books")
     void getBooks_valid_Success() throws Exception {
-        //GIVEN
-        //WHEN
+        // WHEN
         MvcResult result = mockMvc.perform(
                         get("/books")
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
                 .andReturn();
-        //THEN
-        BookDto[] actual = objectMapper.readValue(
-                result.getResponse().getContentAsString(),
-                BookDto[].class);
+        // THEN
+        String json = result.getResponse().getContentAsString();
+        JsonNode rootNode = objectMapper.readTree(json);
+        JsonNode contentNode = rootNode.get("content");
+
+        BookDto[] actual = objectMapper.readValue(contentNode.toString(), BookDto[].class);
         assertNotNull(actual);
-        assertEquals(actual.length, 4);
+        assertEquals(4, actual.length);
     }
 
     @Test
