@@ -1,5 +1,6 @@
 package mate.academy.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -11,7 +12,6 @@ import mate.academy.mapper.BookMapper;
 import mate.academy.model.Book;
 import mate.academy.repository.BookRepository;
 import mate.academy.service.impl.BookServiceImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,7 +50,7 @@ public class BookServiceTest {
         when(bookRepository.findAll(pageable)).thenReturn(bookPage);
         Page<BookDto> actual = bookService.findAll(pageable);
         //THEN
-        Assertions.assertEquals(expected, actual.getContent());
+        assertEquals(expected, actual.getContent());
         verify(bookRepository, Mockito.times(1)).findAll(pageable);
         verify(bookMapper, Mockito.times(1)).toDto(firstBook);
         verify(bookMapper, Mockito.times(1)).toDto(secondBook);
@@ -69,7 +69,7 @@ public class BookServiceTest {
         when(bookMapper.toDto(book)).thenReturn(expected);
         BookDto actual = bookService.save(bookRequestDto);
         //THEN
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
         verify(bookRepository, Mockito.times(1)).save(book);
         verify(bookMapper, Mockito.times(1)).toEntity(bookRequestDto);
         verify(bookMapper, Mockito.times(1)).toDto(book);
@@ -87,7 +87,7 @@ public class BookServiceTest {
         when(bookMapper.toDto(book)).thenReturn(expected);
         BookDto actual = bookService.getById(id);
         //THEN
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
         verify(bookRepository, Mockito.times(1)).findById(id);
         verify(bookMapper, Mockito.times(1)).toDto(book);
     }

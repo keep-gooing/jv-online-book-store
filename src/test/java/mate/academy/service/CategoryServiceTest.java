@@ -1,5 +1,6 @@
 package mate.academy.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -11,7 +12,6 @@ import mate.academy.mapper.CategoryMapper;
 import mate.academy.model.Category;
 import mate.academy.repository.CategoryRepository;
 import mate.academy.service.impl.CategoryServiceImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,7 +51,7 @@ public class CategoryServiceTest {
         Page<CategoryDto> actualPage = categoryService.findAll(pageable);
 
         // THEN
-        Assertions.assertEquals(List.of(firstCategoryDto,
+        assertEquals(List.of(firstCategoryDto,
                 secondCategoryDto), actualPage.getContent());
         verify(categoryRepository).findAll(pageable);
         verify(categoryMapper).toDto(firstCategory);
@@ -73,7 +73,7 @@ public class CategoryServiceTest {
         CategoryDto actualDto = categoryService.getById(id);
 
         // THEN
-        Assertions.assertEquals(expectedDto, actualDto);
+        assertEquals(expectedDto, actualDto);
         verify(categoryRepository).findById(id);
         verify(categoryMapper).toDto(category);
     }
@@ -94,7 +94,7 @@ public class CategoryServiceTest {
         CategoryDto actualDto = categoryService.save(inputDto);
 
         // THEN
-        Assertions.assertEquals(expectedDto, actualDto);
+        assertEquals(expectedDto, actualDto);
         verify(categoryMapper).toEntity(inputDto);
         verify(categoryRepository).save(category);
         verify(categoryMapper).toDto(category);
@@ -118,7 +118,7 @@ public class CategoryServiceTest {
         CategoryDto actualDto = categoryService.update(id, inputDto);
 
         // THEN
-        Assertions.assertEquals(expectedDto, actualDto);
+        assertEquals(expectedDto, actualDto);
         verify(categoryRepository).findById(id);
         verify(categoryMapper).updateCategoryFromDto(inputDto, category);
         verify(categoryRepository).save(category);
