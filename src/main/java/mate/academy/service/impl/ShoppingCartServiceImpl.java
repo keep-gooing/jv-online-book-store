@@ -46,7 +46,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart currentShoppingCart = shoppingCartRepository.findByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Shopping"
                         + "cart not found for user id " + userId));
-        CartItem currentCartItem = cartItemRepository.findCartItemByUserIdAndBookId(userId, bookId);
+        CartItem currentCartItem = cartItemRepository
+                .findCartItemByShoppingCart_User_IdAndBook_Id(userId, bookId);
         if (currentCartItem == null) {
             Book book = bookRepository.findById(bookId)
                     .orElseThrow(() -> new EntityNotFoundException("Can't find book by id "
