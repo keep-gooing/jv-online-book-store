@@ -2,6 +2,11 @@ databaseChangeLog:
   - changeSet:
       id: insert-users-and-assign-roles
       author: olha
+      preConditions:
+        - not:
+            sqlCheck:
+              expectedResult: 0
+              sql: SELECT COUNT(*) FROM users WHERE id = 1
       changes:
         - insert:
             tableName: users

@@ -7,17 +7,21 @@ databaseChangeLog:
         - insert:
             tableName: roles
             columns:
-              - name: id
-                valueNumeric: 1
-              - name: name
-                value: ADMIN
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: name
+                  value: ADMIN
         - insert:
             tableName: roles
             columns:
-              - name: id
-                valueNumeric: 2
-              - name: name
-                value: USER
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: name
+                  value: USER
 
   # admin user
   - changeSet:
@@ -27,18 +31,24 @@ databaseChangeLog:
         - insert:
             tableName: users
             columns:
-              - name: id
-                valueNumeric: 1
-              - name: email
-                value: admin@example.com
-              - name: password
-                value: "$2a$10$7rGa61L2En5Erq1EIO.zYuIa5KpiDYbLMHq1jz63Pb/Mf81NStq7q"
-              - name: first_name
-                value: Admin
-              - name: last_name
-                value: User
-              - name: shipping_address
-                value: Kyiv
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: email
+                  value: admin@example.com
+              - column:
+                  name: password
+                  value: "$2a$10$7rGa61L2En5Erq1EIO.zYuIa5KpiDYbLMHq1jz63Pb/Mf81NStq7q"
+              - column:
+                  name: first_name
+                  value: Admin
+              - column:
+                  name: last_name
+                  value: User
+              - column:
+                  name: shipping_address
+                  value: Kyiv
 
   # admin role
   - changeSet:
@@ -48,10 +58,12 @@ databaseChangeLog:
         - insert:
             tableName: users_roles
             columns:
-              - name: user_id
-                valueNumeric: 1
-              - name: role_id
-                valueNumeric: 1  # ADMIN
+              - column:
+                  name: user_id
+                  valueNumeric: 1
+              - column:
+                  name: role_id
+                  valueNumeric: 1  # ADMIN
 
   # regular user
   - changeSet:
@@ -61,18 +73,24 @@ databaseChangeLog:
         - insert:
             tableName: users
             columns:
-              - name: id
-                valueNumeric: 2
-              - name: email
-                value: user@example.com
-              - name: password
-                value: "$2a$10$KqJHb0G2HDqz8PZzZTLHyujyiv9dkBQOmHZHpsQx2bK71dNwMG/q6"
-              - name: first_name
-                value: User
-              - name: last_name
-                value: Test
-              - name: shipping_address
-                value: Lviv
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: email
+                  value: user@example.com
+              - column:
+                  name: password
+                  value: "$2a$10$KqJHb0G2HDqz8PZzZTLHyujyiv9dkBQOmHZHpsQx2bK71dNwMG/q6"
+              - column:
+                  name: first_name
+                  value: User
+              - column:
+                  name: last_name
+                  value: Test
+              - column:
+                  name: shipping_address
+                  value: Lviv
 
   # user role
   - changeSet:
@@ -82,7 +100,9 @@ databaseChangeLog:
         - insert:
             tableName: users_roles
             columns:
-              - name: user_id
-                valueNumeric: 2
-              - name: role_id
-                valueNumeric: 2  # USER
+              - column:
+                  name: user_id
+                  valueNumeric: 2
+              - column:
+                  name: role_id
+                  valueNumeric: 2  # USER

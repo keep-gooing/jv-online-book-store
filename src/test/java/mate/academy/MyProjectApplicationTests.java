@@ -8,5 +8,4 @@ class MyProjectApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
