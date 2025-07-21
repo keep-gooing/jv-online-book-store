@@ -3,6 +3,7 @@ package mate.academy.service.impl;
 import lombok.RequiredArgsConstructor;
 import mate.academy.dao.user.UserLoginRequestDto;
 import mate.academy.dao.user.UserLoginResponseDto;
+import mate.academy.service.AuthService;
 import mate.academy.util.JwtUtil;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl {
+public class AuthServiceImpl implements AuthService {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
 

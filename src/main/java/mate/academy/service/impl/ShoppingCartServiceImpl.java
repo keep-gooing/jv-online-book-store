@@ -46,7 +46,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart currentShoppingCart = shoppingCartRepository.findByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Shopping"
                         + "cart not found for user id " + userId));
-        CartItem currentCartItem = cartItemRepository.findCartItemByUserIdAndBookId(userId, bookId);
+        CartItem currentCartItem = cartItemRepository
+                .findByShoppingCart_User_IdAndBook_Id(userId, bookId);
         if (currentCartItem == null) {
             Book book = bookRepository.findById(bookId)
                     .orElseThrow(() -> new EntityNotFoundException("Can't find book by id "
@@ -64,7 +65,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                                                           Long cartItemId,
                                                           int quantity) {
         CartItem currentCartItem = cartItemRepository
-                .findByIdAndShoppingCartId(cartItemId, shoppingCartId)
+                .findByIdAndShoppingCart_Id(cartItemId, shoppingCartId)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Can't find cart item with id " + cartItemId
                                 + " in shopping cart with id " + shoppingCartId));
@@ -77,7 +78,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCartResponseDto deleteCartItem(Long shoppingCartId, Long cartItemId) {
         CartItem currentCartItem = cartItemRepository
-                .findByIdAndShoppingCartId(cartItemId, shoppingCartId)
+                .findByIdAndShoppingCart_Id(cartItemId, shoppingCartId)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Can't find cart item with id " + cartItemId
                                 + " in shopping cart with id " + shoppingCartId));

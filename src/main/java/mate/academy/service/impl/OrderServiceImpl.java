@@ -59,7 +59,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderItemResponseDto getItemByOrderIdAndItemId(Long userId, Long orderId, Long itemId) {
-        OrderItem item = orderItemRepository.findByIdAndOrderIdAndUserId(userId, orderId, itemId)
+        OrderItem item = orderItemRepository
+                .findByIdAndOrder_IdAndOrder_User_Id(userId, orderId, itemId)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find order item by order id "
                         + orderId + ", item id " + itemId + " and user id " + userId));
         return orderItemMapper.toDto(item);
@@ -67,7 +68,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderItemResponseDto> getItemsByOrderId(Long userId, Long orderId) {
-        return orderItemRepository.findByOrderIdAndUserId(userId, orderId).stream()
+        return orderItemRepository.findByOrder_IdAndOrder_User_Id(userId, orderId).stream()
                 .map(orderItemMapper::toDto)
                 .toList();
     }
