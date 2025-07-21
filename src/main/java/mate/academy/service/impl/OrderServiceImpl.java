@@ -62,8 +62,9 @@ public class OrderServiceImpl implements OrderService {
     public OrderItemResponseDto getItemByOrderIdAndItemId(Long userId, Long orderId, Long itemId) {
         OrderItem item = orderItemRepository
                 .findByIdAndOrder_IdAndOrder_User_Id(userId, orderId, itemId)
-                .orElseThrow(() -> new EntityNotFoundException("Can't find order item by order id "
-                        + orderId + ", item id " + itemId + " and user id " + userId));
+                .orElseThrow(() -> new EntityNotFoundException("Can't find order item by "
+                        + "order id " + orderId + ", item id " + itemId + " and user id "
+                        + userId));
         return orderItemMapper.toDto(item);
     }
 
