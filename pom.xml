@@ -26,6 +26,18 @@
         <jjwt.version>0.12.3</jjwt.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>1.20.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- Spring Boot -->
         <dependency>
@@ -40,6 +52,41 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-docker-compose</artifactId>
             <version>3.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>3.5.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Testcontainers -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.18.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -71,7 +118,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Database (H2 for tests for production) -->
+        <!-- Database -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -83,13 +130,8 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.7.3</version> <!-- або актуальну -->
-        </dependency>
 
-        <!-- Lombok (for getters/setters and constructors) -->
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -112,14 +154,12 @@
             <artifactId>jjwt-api</artifactId>
             <version>${jjwt.version}</version>
         </dependency>
-
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
-
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
@@ -127,21 +167,21 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Swagger Dependencies -->
+        <!-- Swagger -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.5.0</version>
         </dependency>
 
-        <!-- Apache Commons BeanUtils -->
+        <!-- Apache Commons -->
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.4</version>
         </dependency>
 
-        <!-- Testing dependencies -->
+        <!-- Testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -164,7 +204,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- Checkstyle plugin -->
+            <!-- Checkstyle -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -186,7 +226,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Compiler plugin to enable annotation processing for Lombok and MapStruct -->
+            <!-- Compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
