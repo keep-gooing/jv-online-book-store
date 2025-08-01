@@ -98,4 +98,5 @@ Resolution: Refactored the security setup by incorporating the appropriate ***fi
 
 ---
 This project was a great learning experience and showcases my ability to build a back-end of application with modern Java technologies.
-If you're interested in the project and want to see it in action, I've included a showcase video demonstrating the application usage:
+If you're interested in the project and want to see it in action, I've included a showcase video demonstrating the application usage: https://www.loom.com/share/4122324a84c04dd681c20bd5eacbaf0d?sid=ab33800a-9aaa-49b0-94b0-4a769dfe8e23
+
