@@ -2,22 +2,23 @@
 
 ## Project Overview
 
-You are watching **Online Book Store** project. This application is designed to simplify the process of buying books online.
+The **Online Book Store** is a full-featured application for purchasing books online.
 It addresses the challenges of finding and purchasing books by offering a user-friendly interface for both customers and administrators.
 Users can browse books, search them by category, add them to the shopping cart, and place orders, while administrators manage the catalog of available books.
 
 ## Technologies Used
 
-- **Spring Boot** - Backend framework for building the core application
-- **Spring Security** - For managing authentication and authorization
-- **Spring Data JPA** - For interacting with the database
-- **MySQL** - Database to store book and user information
+- **Java** 17 – Programming language
+- **Spring Boot** 3.2.0 - Backend framework for building the core application
+- **Spring Security** 6.2.x - For managing authentication and authorization
+- **Spring Data JPA** 3.2.x - For interacting with the database
+- **PostgreSQL** 15 - Database to store book and user information
 - **Docker** - Containerization for easy deployment
-- **Swagger** - API documentation and testing
-- **MapStruct** - Object mapping
-- **Liquibase** - Database change management
-- **JUnit & Mockito** - For unit testing
-- **Testcontainers** - For integration testing with real databases
+- **Swagger** 2.5.0 - API documentation and testing
+- **MapStruct** 1.5.5 Final - Object mapping
+- **Liquibase** 4.x - Database change management
+- **JUnit & Mockito** 5 / 5.18.0 - For unit testing
+- **Testcontainers** 1.20.1 - For integration testing with real databases
 
 - ## Key Functionalities
 - ### For users
@@ -47,21 +48,21 @@ Users can browse books, search them by category, add them to the shopping cart, 
     cd online-book-store
     ```
 
-2. Create .evn file for environment by filling the .env.template
+2.  Create the .env file by copying .env.template and replacing placeholder values:
        ```
-    MYSQLDB_DATABASE=<your_database_name>
-    MYSQLDB_USER=<your_username>
-    MYSQLDB_PASSWORD=<your_password>
-    MYSQLDB_ROOT_PASSWORD=<your_root_password>
+# PostgreSQL database settings
+      POSTGRES_USER=<your_postgres_user>
+      POSTGRES_PASSWORD=<your_postgres_password>
+      POSTGRES_DATABASE=<your_database_name>
+      POSTGRES_LOCAL_PORT=<your_local_port>
+      POSTGRES_DOCKER_PORT=<your_docker_port>
 
-    SPRING_DATASOURCE_PORT=<your_spring_datasource_port>
-    MYSQLDB_PORT=<your_mysql_port>
+# Spring Boot application ports
+     SPRING_LOCAL_PORT=<your_spring_local_port>
+     SPRING_DOCKER_PORT=<your_spring_docker_port>
 
-    SPRING_DATASOURCE_PORT=<your_spring_datasource_port>
-    MYSQLDB_LOCAL_PORT=<your_local_port>
-    MYSQLDB_DOCKER_PORT=<your_docker_port>
-    SPRING_LOCAL_PORT=<your_spring_local_port>
-    SPRING_DOCKER_PORT=<your_spring_docker_port>
+# Debug port (optional)
+    DEBUG_PORT=<your_debug_port>
     ```
 
 3. Build and start the containers using Docker Compose:
@@ -77,7 +78,7 @@ Users can browse books, search them by category, add them to the shopping cart, 
     ```bash
     mvn clean test
     ```
-Swagger UI is available for testing the API and is accessible at `http://localhost:8080/swagger-ui.html`. 
+Swagger UI is available for testing the API and is accessible at `http://localhost:8080/api/swagger-ui/index.html#/`. 
 It includes endpoints for all available operations, such as browsing books, managing the cart, and handling orders.
 
 ## Challenges Faced
@@ -95,6 +96,10 @@ Spring Security Configuration
 Issue: Experienced ***access control*** errors due to misconfigured Spring Security settings, which led to unauthorized or blocked requests.
 Resolution: Refactored the security setup by incorporating the appropriate ***filters, URL patterns, and user roles***. These changes resolved the access problems and enforced the required ***security standards***.
 
+## Testing the API with Postman
+
+Import the [Postman collection](https://olhaoleshchuk.postman.co/workspace/Olha-Oleshchuk's-Workspace~788862a7-cf6f-4a81-8d4b-23606e2677b9/request/45714411-3cf61d86-c479-4561-8d31-3e6d08349473?action=share&source=copy-link&creator=45714411) to test API endpoints.
+Set localhost:8080/api as the base URL for all requests.
 
 ---
 This project was a great learning experience and showcases my ability to build a back-end of application with modern Java technologies.
