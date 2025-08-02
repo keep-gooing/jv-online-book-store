@@ -31,6 +31,60 @@ Users can browse books, search them by category, add them to the shopping cart, 
 - **Book management**: Add books, change information about them, delete them.
 - **Category management**: Add categories, change information about them, delete them.
 - **Order management**: Update orders status
+
+### Model diagram
+
++--------------------------+          +-------------------------+
+|          Book            |<>------<>|       Category          |
++--------------------------+  books   +-------------------------+
+| - id: Long               |          | - id: Long              |
+| - title: String          |          | - name: String          |
+| - author: String         |          | - description: String   |
+| - isbn: String           |          | - isDeleted: boolean    |
+| - price: BigDecimal      |          +-------------------------+
+| - description: String    |
+| - coverImage: String     |
+| - isDeleted: boolean     |
++--------------------------+
+         ▲                          
+         |                            
+         | 
++---------------------+          +---------------------+
+|        User         |          |        Role         |
++---------------------+          +---------------------+
+| - id: Long          |          | - id: Long          |
+| - email: String     |          | - roleName: Enum    |
+| - password: String  |          +---------------------+
+| - firstName: String |                    ▲
+| - lastName: String  |                    |
+| - shippingAddress   |          +---------------------+
+| - isDeleted: boolean|<-------->|  users_roles (join) |
++---------------------+          +---------------------+
+         |
+         | 
+         ▼ 
++--------------------------+              +--------------------------+
+|     ShoppingCart         |<-------------|        CartItem          |
++--------------------------+              +--------------------------+
+| - id: Long               |              | - id: Long               |
+| - isDeleted: boolean     |              | - quantity: int          |
++--------------------------+              |                          |
+         |                                | * book_id → Book         |
+         |                                | * shopping_cart_id → SC  |
+         |                                +--------------------------+
+         |
+         | 
+         ▼ 
++--------------------------+           +-------------------------+
+|          Order           |<----------|      OrderItem          |
++--------------------------+           +-------------------------+
+| - id: Long               |           | - id: Long              |
+| - status: Enum           |           | - quantity: int         |
+| - total: BigDecimal      |           | - price: BigDecimal     |
+| - orderDate: DateTime    |           | - book_id → Book        |
+| - shippingAddress: String|           | - order_id → Order      |
+| - isDeleted: boolean     |           | - isDeleted: boolean    |
++--------------------------+           +-------------------------+
   
 ## How to Run the Project
 
