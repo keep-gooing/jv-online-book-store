@@ -34,57 +34,7 @@ Users can browse books, search them by category, add them to the shopping cart, 
 
 ### Model diagram
 
-+--------------------------+          +-------------------------+
-|          Book            |<>------<>|       Category          |
-+--------------------------+  books   +-------------------------+
-| - id: Long               |          | - id: Long              |
-| - title: String          |          | - name: String          |
-| - author: String         |          | - description: String   |
-| - isbn: String           |          | - isDeleted: boolean    |
-| - price: BigDecimal      |          +-------------------------+
-| - description: String    |
-| - coverImage: String     |
-| - isDeleted: boolean     |
-+--------------------------+
-         ▲                          
-         |                            
-         | 
-+---------------------+          +---------------------+
-|        User         |          |        Role         |
-+---------------------+          +---------------------+
-| - id: Long          |          | - id: Long          |
-| - email: String     |          | - roleName: Enum    |
-| - password: String  |          +---------------------+
-| - firstName: String |                    ▲
-| - lastName: String  |                    |
-| - shippingAddress   |          +---------------------+
-| - isDeleted: boolean|<-------->|  users_roles (join) |
-+---------------------+          +---------------------+
-         |
-         | 
-         ▼ 
-+--------------------------+              +--------------------------+
-|     ShoppingCart         |<-------------|        CartItem          |
-+--------------------------+              +--------------------------+
-| - id: Long               |              | - id: Long               |
-| - isDeleted: boolean     |              | - quantity: int          |
-+--------------------------+              |                          |
-         |                                | * book_id → Book         |
-         |                                | * shopping_cart_id → SC  |
-         |                                +--------------------------+
-         |
-         | 
-         ▼ 
-+--------------------------+           +-------------------------+
-|          Order           |<----------|      OrderItem          |
-+--------------------------+           +-------------------------+
-| - id: Long               |           | - id: Long              |
-| - status: Enum           |           | - quantity: int         |
-| - total: BigDecimal      |           | - price: BigDecimal     |
-| - orderDate: DateTime    |           | - book_id → Book        |
-| - shippingAddress: String|           | - order_id → Order      |
-| - isDeleted: boolean     |           | - isDeleted: boolean    |
-+--------------------------+           +-------------------------+
+<img width="1402" height="1058" alt="image" src="https://github.com/user-attachments/assets/14122e5e-70a6-466e-94fa-05b635c4063b" />
   
 ## How to Run the Project
 
@@ -104,19 +54,16 @@ Users can browse books, search them by category, add them to the shopping cart, 
 
 2.  Create the .env file by copying .env.template and replacing placeholder values:
        ```
-# PostgreSQL database settings
       POSTGRES_USER=<your_postgres_user>
       POSTGRES_PASSWORD=<your_postgres_password>
       POSTGRES_DATABASE=<your_database_name>
       POSTGRES_LOCAL_PORT=<your_local_port>
       POSTGRES_DOCKER_PORT=<your_docker_port>
 
-# Spring Boot application ports
-     SPRING_LOCAL_PORT=<your_spring_local_port>
-     SPRING_DOCKER_PORT=<your_spring_docker_port>
-
-# Debug port (optional)
-    DEBUG_PORT=<your_debug_port>
+      SPRING_LOCAL_PORT=<your_spring_local_port>
+      SPRING_DOCKER_PORT=<your_spring_docker_port>
+       
+      DEBUG_PORT=<your_debug_port>
     ```
 
 3. Build and start the containers using Docker Compose:
