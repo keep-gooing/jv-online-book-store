@@ -62,8 +62,10 @@ Users can browse books, search them by category, add them to the shopping cart, 
 
       SPRING_LOCAL_PORT=<your_spring_local_port>
       SPRING_DOCKER_PORT=<your_spring_docker_port>
-       
       DEBUG_PORT=<your_debug_port>
+
+      JWT_EXPIRATION=<your_jwt_expiration>
+      JWT_SECRET=<your_jwt_secret>
     ```
 
 3. Build and start the containers using Docker Compose:
