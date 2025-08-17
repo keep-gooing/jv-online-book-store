@@ -31,7 +31,7 @@ public class CategoryController {
     private final CategoryService categoryService;
     private final BookService bookService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Create a new category", description = "Create a new category")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -39,7 +39,7 @@ public class CategoryController {
         return categoryService.save(categoryDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize(value = "hasAnyRole('USER', 'ADMIN')")
     @Operation(summary = "Get all categories",
             description = "Get paginated and sorted list of all available categories")
     @GetMapping
@@ -47,14 +47,14 @@ public class CategoryController {
         return categoryService.findAll(pageable);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize(value = "hasAnyRole('USER', 'ADMIN')")
     @Operation(summary = "Get specific category", description = "Get specific category")
     @GetMapping("/{id}")
     public CategoryDto getCategoryById(@PathVariable Long id) {
         return categoryService.getById(id);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update specific category", description = "Update specific category")
     @PutMapping("/{id}")
     public CategoryDto updateCategory(@PathVariable Long id,
@@ -62,7 +62,7 @@ public class CategoryController {
         return categoryService.update(id, categoryDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Delete specific category", description = "Delete specific category")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -70,7 +70,7 @@ public class CategoryController {
         categoryService.deleteById(id);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize(value = "hasAnyRole('USER', 'ADMIN')")
     @Operation(summary = "Get all books by category",
             description = "Get all books that belong to a specific category")
     @GetMapping("/{id}/books")

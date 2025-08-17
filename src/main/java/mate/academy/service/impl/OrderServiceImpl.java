@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderItemResponseDto getItemByOrderIdAndItemId(Long userId, Long orderId, Long itemId) {
         OrderItem item = orderItemRepository
-                .findByIdAndOrder_IdAndOrder_User_Id(userId, orderId, itemId)
+                .findByIdAndOrder_IdAndOrder_User_Id(itemId, orderId, userId)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find order item by "
                         + "order id " + orderId + ", item id " + itemId + " and user id "
                         + userId));
@@ -70,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderItemResponseDto> getItemsByOrderId(Long userId, Long orderId) {
-        return orderItemRepository.findByOrder_IdAndOrder_User_Id(userId, orderId).stream()
+        return orderItemRepository.findByOrder_IdAndOrder_User_Id(orderId, userId).stream()
                 .map(orderItemMapper::toDto)
                 .toList();
     }
@@ -99,8 +99,8 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toSet());
         order.setOrderItems(orderItemSet);
         BigDecimal total = cart.getCartItems().stream()
-                .map(cartItem -> cartItem.getBook().getPrice().multiply(
-                        BigDecimal.valueOf(cartItem.getQuantity())))
+                .map(cartItem -> cartItem.getBook().getPrice()
+                        .multiply(BigDecimal.valueOf(cartItem.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         order.setTotal(total);
         return order;

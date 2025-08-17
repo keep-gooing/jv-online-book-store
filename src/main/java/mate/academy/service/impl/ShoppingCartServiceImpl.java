@@ -3,6 +3,7 @@ package mate.academy.service.impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import mate.academy.dao.shoppingcart.ShoppingCartResponseDto;
+import mate.academy.dao.shoppingcart.UpdateCartItemRequestDto;
 import mate.academy.exception.EntityNotFoundException;
 import mate.academy.mapper.CartItemMapper;
 import mate.academy.mapper.ShoppingCartMapper;
@@ -57,34 +58,31 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             currentCartItem.setQuantity(currentCartItem.getQuantity() + quantity);
         }
         cartItemRepository.save(currentCartItem);
+        currentCartItem.setShoppingCart(currentShoppingCart);
         return shoppingCartMapper.toDto(currentShoppingCart);
     }
 
     @Override
-    public ShoppingCartResponseDto updateCartItemQuantity(Long shoppingCartId,
-                                                          Long cartItemId,
-                                                          int quantity) {
-        CartItem currentCartItem = cartItemRepository
-                .findByIdAndShoppingCartId(cartItemId, shoppingCartId)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Can't find cart item with id " + cartItemId
-                                + " in shopping cart with id " + shoppingCartId));
-        ShoppingCart cart = currentCartItem.getShoppingCart();
-        currentCartItem.setQuantity(quantity);
-        cartItemRepository.save(currentCartItem);
-        return shoppingCartMapper.toDto(cart);
+    public ShoppingCartResponseDto updateCartItemQuantity(Long itemId,
+                                                      User user,
+                                                      UpdateCartItemRequestDto cartItemDto) {
+        ShoppingCart currentShoppingCart = shoppingCartRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Shopping"
+                        + "cart not found for user id " + user.getId()));
+        CartItem cartItem = cartItemRepository.findByIdAndShoppingCartId(itemId, user.getId())
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Can't find item by id " + itemId));
+        cartItem.setQuantity(cartItemDto.getQuantity());
+        cartItemRepository.save(cartItem);
+        return shoppingCartMapper.toDto(currentShoppingCart);
     }
 
     @Override
-    public ShoppingCartResponseDto deleteCartItem(Long shoppingCartId, Long cartItemId) {
-        CartItem currentCartItem = cartItemRepository
-                .findByIdAndShoppingCartId(cartItemId, shoppingCartId)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Can't find cart item with id " + cartItemId
-                                + " in shopping cart with id " + shoppingCartId));
-        ShoppingCart cart = currentCartItem.getShoppingCart();
-        cart.getCartItems().remove(currentCartItem);
-        cartItemRepository.delete(currentCartItem);
-        return shoppingCartMapper.toDto(cart);
+    public ShoppingCartResponseDto deleteCartItem(User user, Long itemId) {
+        ShoppingCart currentShoppingCart = shoppingCartRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Shopping"
+                        + "cart not found for user id " + user.getId()));
+        cartItemRepository.deleteCartItemByIdAndShoppingCartId(itemId, user.getId());
+        return shoppingCartMapper.toDto(currentShoppingCart);
     }
 }

@@ -1,6 +1,7 @@
 package mate.academy.service;
 
 import mate.academy.dao.shoppingcart.ShoppingCartResponseDto;
+import mate.academy.dao.shoppingcart.UpdateCartItemRequestDto;
 import mate.academy.model.User;
 
 public interface ShoppingCartService {
@@ -10,9 +11,9 @@ public interface ShoppingCartService {
 
     ShoppingCartResponseDto addItemToCart(Long userId, Long bookId, int quantity);
 
-    ShoppingCartResponseDto updateCartItemQuantity(Long shoppingCartId,
-                                                   Long cartItemId,
-                                                   int quantity);
+    ShoppingCartResponseDto updateCartItemQuantity(Long itemId,
+                                                   User user,
+                                                   UpdateCartItemRequestDto cartItemDto);
 
-    ShoppingCartResponseDto deleteCartItem(Long shoppingCartId, Long cartItemId);
+    ShoppingCartResponseDto deleteCartItem(User user, Long itemId);
 }

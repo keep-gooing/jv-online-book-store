@@ -10,7 +10,6 @@ import mate.academy.model.Book;
 import mate.academy.model.Category;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(config = MapperConfig.class)
@@ -19,28 +18,24 @@ public interface BookMapper {
 
     BookDtoWithoutCategoryIds toDtoWithoutCategories(Book book);
 
-    @Mapping(target = "categories", source = "categoryIds")
-    Book toEntity(CreateBookRequestDto requestDto);
-
-    void updateBookFromDto(CreateBookRequestDto dto, @MappingTarget Book entity);
-
     @AfterMapping
-    default void setCategoryIds(@MappingTarget BookDto bookDto, Book book) {
+    default void setCategoriesIds(@MappingTarget BookDto bookDto, Book book) {
         if (book.getCategories() != null) {
-            Set<Long> categoryIds = book.getCategories().stream()
+            bookDto.setCategoryIds(book.getCategories().stream()
                     .map(Category::getId)
-                    .collect(Collectors.toSet());
-            bookDto.setCategoryIds(categoryIds);
+                    .collect(Collectors.toSet()));
         }
     }
 
-    default Set<Category> mapCategoryIdsToCategories(Set<Long> categoryIds) {
-        return categoryIds.stream()
-                .map(id -> {
-                    Category category = new Category();
-                    category.setId(id);
-                    return category;
-                })
+    @AfterMapping
+    default void setCategories(@MappingTarget Book book, CreateBookRequestDto bookDto) {
+        Set<Category> categories = bookDto.getCategoryIds().stream()
+                .map(Category::new)
                 .collect(Collectors.toSet());
+        book.setCategories(categories);
     }
+
+    Book toEntity(CreateBookRequestDto bookDto);
+
+    void updateBookFromDto(CreateBookRequestDto bookDto, @MappingTarget Book book);
 }
